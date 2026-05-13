@@ -30,11 +30,12 @@ MedCure is a full-stack healthcare web application that allows users to order me
 
 # Project Structure
 
+```bash
 MedCure/
 │
 ├── views/
 │   ├── login.ejs
-│   ├── signup.ejs
+│   └── signup.ejs
 │
 ├── MedCure.html
 ├── medicines.html
@@ -42,6 +43,7 @@ MedCure/
 ├── server.js
 ├── package.json
 └── README.md
+```
 
 # Installation & Setup
 
