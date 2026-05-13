@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purely · Shopping Cart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #fcf7f2;
+            color: #3e3a37;
+        }
+
+        :root {
+            --primary: #b35e3a;
+            --primary-light: #e6c7b2;
+            --border-warm: #edd9cb;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #efdbce;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #3a2e28;
+            font-weight: 500;
+        }
+
+        /* Cart Layout */
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 40px;
+            padding: 30px;
+            border: 1px solid var(--border-warm);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0e0d6;
+            gap: 20px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            font-size: 2.5rem;
+            width: 70px;
+            text-align: center;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .qty-btn {
+            background: var(--primary-light);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            background: white;
+            border-radius: 40px;
+            padding: 30px;
+            border: 1px solid var(--border-warm);
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0e0d6;
+        }
+
+        .summary-row.total {
+            border-bottom: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background: #fdf3ea;
+            border-radius: 30px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .payment-method {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px;
+            border-radius: 30px;
+            border: 2px solid var(--border-warm);
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .checkout-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 60px;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        .checkout-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .payment-card {
+            background: white;
+            border-radius: 60px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .continue-shopping {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 60px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="index.html" class="logo">MedCare</a>
+            <div class="nav-links">
+                <a href="index.html">home</a>
+                <a href="medicines.html">medicines</a>
+                <a href="#">consult</a>
+                <a href="#">lab tests</a>
+            </div>
+        </nav>
+
+        <!-- Cart Content -->
+        <div id="cartContent"></div>
+
+        <!-- Payment Success Modal -->
+        <div class="payment-modal" id="paymentModal">
+            <div class="payment-card">
+                <div class="success-icon">✅</div>
+                <h2>Payment Successful!</h2>
+                <p>Your order has been placed. You will receive a confirmation shortly.</p>
+                <a href="index.html" class="continue-shopping">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let selectedPayment = 'card';
+
+        function loadCart() {
+            const container = document.getElementById('cartContent');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <h2>Your cart is empty</h2>
+                        <p>Browse our medicines and add items to your cart</p>
+                        <a href="medicines.html" class="continue-shopping">Browse Medicines</a>
+                    </div>
+                `;
+                return;
+            }
+
+            let subtotal = 0;
+            let itemsHtml = '';
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                itemsHtml += `
+                    <div class="cart-item">
+                        <div class="item-image">📦</div>
+                        <div class="item-details">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">₹${item.price}</div>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        <div class="remove-btn" onclick="removeItem(${item.id})">🗑️</div>
+                    </div>
+                `;
+            });
+
+            const shipping = 40;
+            const total = subtotal + shipping;
+
+            container.innerHTML = `
+                <div class="cart-container">
+                    <div class="cart-items">
+                        <h2>Shopping Cart (${cart.reduce((sum, i) => sum + i.quantity, 0)} items)</h2>
+                        ${itemsHtml}
+                    </div>
+                    <div class="cart-summary">
+                        <h2>Order Summary</h2>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span>₹${subtotal}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span>₹${shipping}</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span>₹${total}</span>
+                        </div>
+                        
+                        <div class="payment-section">
+                            <h3>Payment Method</h3>
+                            <div class="payment-methods">
+                                <div class="payment-method ${selectedPayment === 'card' ? 'selected' : ''}" onclick="selectPayment('card')">
+                                    💳 Card
+                                </div>
+                                <div class="payment-method ${selectedPayment === 'upi' ? 'selected' : ''}" onclick="selectPayment('upi')">
+                                    📱 UPI
+                                </div>
+                                <div class="payment-method ${selectedPayment === 'cod' ? 'selected' : ''}" onclick="selectPayment('cod')">
+                                    💵 COD
+                                </div>
+                            </div>
+                            
+                            <button class="checkout-btn" onclick="processPayment()">
+                                Pay ₹${total}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateQuantity(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCart();
+            }
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(i => i.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+        }
+
+        function selectPayment(method) {
+            selectedPayment = method;
+            loadCart();
+        }
+
+        function processPayment() {
+            // Simulate payment processing
+            document.getElementById('paymentModal').style.display = 'flex';
+
+            // Clear cart after successful payment
+            setTimeout(() => {
+                localStorage.removeItem('cart');
+            }, 1000);
+        }
+
+        // Initial load
+        loadCart();
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function (e) {
+            const modal = document.getElementById('paymentModal');
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

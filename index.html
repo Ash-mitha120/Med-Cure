@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purely · Pharmacy with heart</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@0;1&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #fcf7f2;
+            color: #3e3a37;
+        }
+
+        :root {
+            --primary: #b35e3a;
+            --primary-light: #e6c7b2;
+            --secondary: #9b6b5e;
+            --accent: #d6937a;
+            --bg-soft: #faf1e9;
+            --bg-card: #ffffffd9;
+            --text-dark: #3a2e28;
+            --text-soft: #6b4f42;
+            --border-warm: #edd9cb;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #efdbce;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .login-btn {
+            background: var(--primary);
+            color: white !important;
+            padding: 10px 28px;
+            border-radius: 40px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            border-bottom: none !important;
+        }
+
+        .login-btn:hover {
+            background: #9e4f2f;
+            border-bottom: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 50px 0 40px;
+            flex-wrap: wrap;
+            background: #f5e4d8;
+            border-radius: 120px 120px 40px 40px;
+            padding: 24px 16px 16px;
+            text-align: center;
+            box-shadow: 0 20px 30px rgba(140, 80, 40, 0.1);
+        }
+
+        .hero-text {
+            flex: 1 1 300px;
+            justify-content: flex-start;
+        }
+
+        .hero-text h1 {
+            font-size: 3.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.1;
+        }
+
+        .hero-text h1 span {
+            color: var(--primary);
+        }
+
+        .hero-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 24px 0 20px;
+            background: linear-gradient(135deg, #7a5a48 0%, #b35e3a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            border-left: 6px solid var(--accent);
+            padding-left: 24px;
+        }
+
+        .hero-images {
+            flex: 1 1 300px;
+            display: flex;
+            gap: 20px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .hero-img-card {
+            background: #f5e4d8;
+            border-radius: 120px 120px 40px 40px;
+            padding: 24px 16px 16px;
+            text-align: center;
+            box-shadow: 0 20px 30px rgba(140, 80, 40, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-img-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .hero-img-card img {
+            width: 500px;
+            height: 500px;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f5e4d8;
+            padding: 10px 24px;
+            border-radius: 50px;
+            color: #5a3f32;
+            font-weight: 500;
+        }
+
+        .trust-icon {
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin: 50px 0 24px;
+            border-bottom: 4px solid var(--primary-light);
+            padding-bottom: 12px;
+            display: inline-block;
+        }
+
+        /* Medicine Grid */
+        .med-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 30px;
+            margin: 30px 0 20px;
+        }
+
+        .med-card {
+            background: var(--bg-card);
+            border-radius: 36px;
+            padding: 24px 16px;
+            text-align: center;
+            border: 1px solid var(--border-warm);
+            box-shadow: 0 8px 18px #f0ddd1;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .med-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(180, 100, 60, 0.15);
+        }
+
+        .prescription-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .med-card img {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            margin-bottom: 12px;
+        }
+
+        .med-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #563e2e;
+        }
+
+        .med-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 10px 0;
+        }
+
+        .discount-badge {
+            background: #e6b8a2;
+            color: #5a3324;
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 30px;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        .add-btn {
+            background: var(--primary-light);
+            border: none;
+            padding: 10px 28px;
+            border-radius: 60px;
+            color: #4a3529;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #dbb9a4;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .add-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .add-btn:active {
+            transform: scale(0.95);
+        }
+
+        .add-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .logout-btn {
+            background: #e0cbbc;
+            color: #5a3f32 !important;
+            padding: 8px 22px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            border: none;
+            font-size: 1rem;
+        }
+
+        /* Prescription Upload Area */
+        .prescription-area {
+            background: linear-gradient(135deg, #f9ece2 0%, #f5dfd1 100%);
+            border-radius: 64px;
+            padding: 40px;
+            margin: 50px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px dashed #dbb9a2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prescription-area::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .prescription-text h3 {
+            font-size: 1.8rem;
+            color: #623f2c;
+            margin-bottom: 10px;
+        }
+
+        .upload-box {
+            background: white;
+            border-radius: 100px;
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: 0 8px 16px #e3cbbd;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .upload-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 42px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        /* Medical Tips */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 28px;
+            margin: 30px 0 50px;
+        }
+
+        .tip-card {
+            background: #fdf3ea;
+            border-radius: 40px;
+            padding: 28px 22px;
+            border: 1px solid #edd1bf;
+            transition: transform 0.3s;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0 50px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(180, 120, 70, 0.1);
+            border: 1px solid #edd9cb;
+        }
+
+        .stars {
+            color: #ffb347;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .customer {
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: #ebdbd0;
+            border-radius: 60px 60px 0 0;
+            padding: 48px 32px 24px;
+            margin-top: 60px;
+            color: #4f3c30;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .footer-col p {
+            margin: 12px 0;
+            max-width: 260px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 48px;
+            color: #7b5e4d;
+        }
+
+        /* Floating Cart */
+        .floating-cart {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 60px;
+            box-shadow: 0 10px 30px rgba(180, 80, 40, 0.3);
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .floating-cart:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .prescription-modal {
+            background: white;
+            border-radius: 48px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .prescription-modal h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .prescription-modal input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 30px;
+            border: 2px solid var(--border-warm);
+            margin: 10px 0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .modal-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: #f0e4da;
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Cart -->
+    <div class="floating-cart" id="floatingCart" onclick="window.location.href='cart.html'">
+        🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <!-- Prescription Modal -->
+    <div class="modal-overlay" id="prescriptionModal">
+        <div class="prescription-modal">
+            <h3>📋 Prescription Required</h3>
+            <p>This medicine requires a valid prescription. Please upload or provide prescription details.</p>
+            <input id="prescriptionRef">
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" onclick="closePrescriptionModal()">Cancel</button>
+                <button class="modal-btn primary">okay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="/" class="logo">MedCure</a>
+            <div class="nav-links">
+                <a href="/" class="active">home</a>
+                <a href="medicines.html">medicines</a>
+                <a href="#">consult</a>
+                <div id="authSection"></div>
+
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-text">
+                <h1>feel better,<br><span>naturally</span></h1>
+                <div class="hero-quote">“The art of medicine consists of amusing the patient while nature cures the
+                    disease.” – Voltaire</div>
+                <p style="color: #735e51;">Your health, our promise. Trusted by thousands.</p>
+            </div>
+            <div class="hero-images">
+                <div class="hero-img-card">
+                    <img src="pharma_1.jpg" alt="doctor">
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="trust-badges">
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Genuine medicines</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Free delivery</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Pay securely</span>
+            </div>
+        </div>
+
+        <!-- Frequently Bought Medicines -->
+        <h2 class="section-title">most frequently bought</h2>
+        <div class="med-grid">
+            <div class="med-card" data-id="1" data-name="Paracetamol" data-price="45" data-prescription="false">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='70' height='30' x='15' y='40' fill='%23dbb9a4' rx='10'/%3E%3Ccircle cx='35' cy='30' r='8' fill='%23b35e3a'/%3E%3Ccircle cx='65' cy='30' r='8' fill='%23b35e3a'/%3E%3C/svg%3E"
+                    alt="paracetamol">
+                <div class="med-name">Paracetamol</div>
+                <div class="med-price">₹45.00 <span class="discount-badge">15% off</span></div>
+                <button class="add-btn" onclick="addToCart(1, 'Paracetamol', 45, false)">add to cart</button>
+            </div>
+            <div class="med-card" data-id="2" data-name="Cetirizine" data-price="32" data-prescription="false">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='60' height='40' x='20' y='30' fill='%23e6c7b2' rx='12'/%3E%3Ctext x='38' y='65' font-size='30' fill='%239b6b5e'%3E💊%3C/text%3E%3C/svg%3E"
+                    alt="cetirizine">
+                <div class="med-name">Cetirizine</div>
+                <div class="med-price">₹32.00</div>
+                <button class="add-btn" onclick="addToCart(2, 'Cetirizine', 32, false)">add to cart</button>
+            </div>
+            <div class="med-card" data-id="3" data-name="Vitamin C" data-price="189" data-prescription="false">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23b35e3a' d='M30,50 L70,50 L60,80 L40,80 Z'/%3E%3Crect x='40' y='20' width='20' height='40' fill='%23d6937a'/%3E%3C/svg%3E"
+                    alt="vitamin">
+                <div class="med-name">Vitamin C</div>
+                <div class="med-price">₹189.00</div>
+                <button class="add-btn" onclick="addToCart(3, 'Vitamin C', 189, false)">add to cart</button>
+            </div>
+            <div class="med-card" data-id="4" data-name="Azithromycin" data-price="210" data-prescription="true">
+                <span class="prescription-badge">Rx Required</span>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='25' fill='%23edd9cb'/%3E%3Ctext x='40' y='55' font-size='34' fill='%239b6b5e'%3E💊%3C/text%3E%3C/svg%3E"
+                    alt="azithromycin">
+                <div class="med-name">Azithromycin</div>
+                <div class="med-price">₹210.00</div>
+                <button class="add-btn" onclick="addToCart(4, 'Azithromycin', 210, true)">add to cart</button>
+            </div>
+        </div>
+
+        <!-- Prescription Upload Area -->
+        <div class="prescription-area">
+            <div class="prescription-text">
+                <h3>upload prescription</h3>
+                <p style="color:#7a5b48;">we'll upload & verify within minutes</p>
+            </div>
+            <div class="upload-box">
+                <span id="fileInfo">📄 no file chosen</span>
+                <button class="upload-btn" id="uploadPrescriptionBtn">choose file</button>
+                <input type="file" id="fileInput" style="display: none;" accept=".pdf,.jpg,.jpeg,.png">
+            </div>
+        </div>
+
+        <!-- Medical Tips -->
+        <h2 class="section-title">simple medical tips</h2>
+        <div class="tips-grid">
+            <div class="tip-card">
+                <div class="tip-icon">💧</div>
+                <h4>stay hydrated</h4>
+                <p>Drink at least 8 glasses of water daily to support metabolism.</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🧘</div>
+                <h4>rest matters</h4>
+                <p>Sleep 7–8 hours helps your immune system rebuild.</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🥗</div>
+                <h4>eat colorful</h4>
+                <p>Include fruits & veggies for natural vitamins.</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🏃</div>
+                <h4>move daily</h4>
+                <p>30 min walk reduces stress & improves heart health.</p>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <h2 class="section-title">what our customers say</h2>
+        <div class="testimonials">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Fast delivery and genuine medicines. Highly recommend!"</p>
+                <div class="customer">- Priya S.</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"The prescription upload feature is so convenient."</p>
+                <div class="customer">- Rajesh K.</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="logo" style="color: #b35e3a;">MedCure</div>
+                    <p>compassionate care, delivered.</p>
+                </div>
+                <div class="footer-col">
+                    <strong>explore</strong>
+                    <p>medicines</p>
+                    <p>doctor consult</p>
+                    <p>lab tests</p>
+                </div>
+                <div class="footer-col">
+                    <strong>support</strong>
+                    <p>help center</p>
+                    <p>contact us</p>
+                    <p>returns</p>
+                </div>
+            </div>
+            <div class="copyright">© MedCure. 2025 · health first</div>
+        </footer>
+    </div>
+
+    <script>
+        // ================= CART =================
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        updateCartCount();
+
+        let currentItem = null;
+        const modal = document.getElementById('prescriptionModal');
+
+        // ================= AUTH =================
+        function isLoggedIn() {
+            try {
+                const user = localStorage.getItem("user");
+                return user && JSON.parse(user).loggedIn === true;
+            } catch {
+                return false;
+            }
+        }
+
+        function getUserInfo() {
+            try {
+                return JSON.parse(localStorage.getItem("user")) || { name: "User" };
+            } catch {
+                return { name: "User" };
+            }
+        }
+
+        function updateAuthUI() {
+            const authSection = document.getElementById("authSection");
+
+            if (isLoggedIn()) {
+                const user = getUserInfo();
+                authSection.innerHTML = `
+            <span>👋 ${user.name}</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        `;
+            } else {
+                authSection.innerHTML = `<a href="/login" class="login-btn">Login</a>`;
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "/login";
+        }
+
+        // ================= ADD TO CART =================
+        async function addToCart(id, name, price, requiresPrescription) {
+            if (!isLoggedIn()) {
+                alert("🔐 Please login first");
+                localStorage.setItem("redirectAfterLogin", window.location.href);
+                window.location.href = "/login";
+                return;
+            }
+
+            if (requiresPrescription) {
+                currentItem = { id, name, price };
+                await showPrescriptionSelection(); // 🔥 THIS CALLS NEW FUNCTION
+            } else {
+                addItemToCart(id, name, price);
+            }
+        }
+
+        function addItemToCart(id, name, price) {
+            const existing = cart.find(i => i.id === id);
+
+            if (existing) existing.quantity++;
+            else cart.push({ id, name, price, quantity: 1 });
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+
+            alert(`✅ ${name} added`);
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((s, i) => s + i.quantity, 0);
+            document.getElementById('cartCount').innerText = count;
+        }
+
+        // ================= PRESCRIPTION =================
+        async function loadUserPrescriptions() {
+            const user = JSON.parse(localStorage.getItem("user"));
+
+            const res = await fetch(`http://localhost:5000/api/prescriptions/user/${user.id}`);
+            const prescriptions = await res.json();
+
+            const container = document.getElementById("prescriptionList");
+            container.innerHTML = "";
+
+            prescriptions.forEach(p => {
+                const expired = new Date(p.expiry) < new Date();
+
+                container.innerHTML += `
+            <div style="border:1px solid #ddd;padding:10px;margin:10px;border-radius:10px">
+                <p><b>ID:</b> ${p.id}</p>
+                <p><b>Expiry:</b> ${p.expiry}</p>
+                <button ${expired ? "disabled" : ""} 
+                    onclick="selectPrescription('${p.id}')">
+                    ${expired ? "Expired" : "Use"}
+                </button>
+            </div>
+        `;
+            });
+        }
+
+        async function selectPrescription(id) {
+
+            const res = await fetch(`http://localhost:5000/api/prescriptions/${id}`);
+            const data = await res.json();
+
+            const allowed = data.medicines.some(m =>
+                currentItem.name.toLowerCase().includes(m.toLowerCase())
+            );
+
+            if (!allowed) {
+                alert("❌ Medicine not in prescription");
+                return;
+            }
+
+            addItemToCart(currentItem.id, currentItem.name, currentItem.price);
+            closePrescriptionModal();
+        }
+
+        function closePrescriptionModal() {
+            modal.style.display = 'none';
+            currentItem = null;
+        }
+        async function selectPrescription(id) {
+
+            try {
+                const res = await fetch(`http://localhost:5000/api/prescriptions/${id}`);
+
+                if (!res.ok) {
+                    throw new Error("Invalid prescription");
+                }
+
+                const data = await res.json();
+
+                if (new Date(data.expiryDate) < new Date()) {
+                    alert("❌ Prescription expired");
+                    return;
+                }
+
+                const allowed = data.medicines.some(m =>
+                    currentItem.name.toLowerCase().includes(m.name.toLowerCase())
+                );
+
+                if (!allowed) {
+                    alert("❌ Medicine not in prescription");
+                    return;
+                }
+
+                addItemToCart(currentItem.id, currentItem.name, currentItem.price);
+                closePrescriptionModal();
+                alert("✅ Verified & added!");
+
+            } catch (err) {
+                console.error(err);
+                alert("❌ Error verifying prescription");
+            }
+        }
+        async function showPrescriptionSelection() {
+
+            try {
+                const user = JSON.parse(localStorage.getItem("user"));
+
+                const res = await fetch(`http://localhost:5000/api/prescriptions/user/${user._id}`);
+
+                if (!res.ok) {
+                    throw new Error("Failed to fetch prescriptions");
+                }
+
+                const prescriptions = await res.json();
+
+                if (!prescriptions.length) {
+                    alert("❌ No prescriptions found");
+                    return;
+                }
+
+                let html = prescriptions.map(p => `
+            <div onclick="selectPrescription('${p._id}')"
+                 style="padding:10px;margin:10px;border:1px solid #ccc;cursor:pointer;">
+                📄 Prescription <br>
+                Expiry: ${new Date(p.expiryDate).toDateString()}
+            </div>
+        `).join("");
+
+                const modal = document.getElementById("prescriptionModal");
+
+                modal.innerHTML = `
+            <div class="prescription-modal">
+                <h3>Select Prescription</h3>
+                ${html}
+                <button onclick="closePrescriptionModal()">Cancel</button>
+            </div>
+        `;
+
+                modal.style.display = "flex";
+
+            } catch (err) {
+                console.error(err);
+                alert("❌ Error loading prescriptions");
+            }
+        }
+        function closePrescriptionModal() {
+            const modal = document.getElementById("prescriptionModal");
+            modal.style.display = "none";
+            modal.innerHTML = "";
+        }
+
+        // ================= INIT =================
+        updateAuthUI();
+    </script>
+</body>
+
+</html>

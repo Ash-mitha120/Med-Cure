@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCure · Medicines</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@0;1&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #fcf7f2;
+            color: #3e3a37;
+        }
+
+        :root {
+            --primary: #b35e3a;
+            --primary-light: #e6c7b2;
+            --border-warm: #edd9cb;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #efdbce;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #3a2e28;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .login-btn {
+            background: var(--primary);
+            color: white !important;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .logout-btn {
+            background: #e0cbbc;
+            color: #5a3f32 !important;
+            padding: 8px 22px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .user-greeting {
+            color: var(--primary);
+            margin-right: 15px;
+            font-weight: 500;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: #3a2e28;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 5px;
+            border-radius: 60px;
+            border: 1px solid var(--border-warm);
+        }
+
+        .search-bar input {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 60px;
+            width: 300px;
+            outline: none;
+        }
+
+        .search-bar button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 60px;
+            cursor: pointer;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 25px;
+            border-radius: 60px;
+            border: 1px solid var(--border-warm);
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Medicines Grid */
+        .medicines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .medicine-card {
+            background: white;
+            border-radius: 36px;
+            padding: 24px;
+            border: 1px solid var(--border-warm);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .medicine-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        .medicine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(180, 100, 60, 0.1);
+        }
+
+        .prescription-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .medicine-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 15px 0 5px;
+        }
+
+        .medicine-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 8px 0;
+        }
+
+        .medicine-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .add-to-cart {
+            background: var(--primary-light);
+            border: none;
+            padding: 12px;
+            border-radius: 60px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Floating Cart */
+        .floating-cart {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 60px;
+            box-shadow: 0 10px 30px rgba(180, 80, 40, 0.3);
+            z-index: 1000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .floating-cart:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .prescription-modal {
+            background: white;
+            border-radius: 48px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .prescription-modal h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .prescription-modal input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 30px;
+            border: 2px solid var(--border-warm);
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .modal-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: #f0e4da;
+            color: var(--text-dark);
+        }
+
+        .footer {
+            background: #ebdbd0;
+            border-radius: 60px 60px 0 0;
+            padding: 48px 32px 24px;
+            margin-top: 60px;
+            text-align: center;
+            color: #4f3c30;
+        }
+
+        @media(max-width:768px) {
+            .page-header {
+                flex-direction: column;
+            }
+
+            .search-bar input {
+                width: 200px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Cart -->
+    <div class="floating-cart" id="floatingCart" onclick="window.location.href='cart.html'">
+        🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+
+    <!-- Prescription Modal -->
+    <div class="modal-overlay" id="prescriptionModal">
+        <div class="prescription-modal">
+            <h3>📋 Prescription Required</h3>
+            <p>This medicine requires a valid prescription. Please enter your prescription ID or reference number.</p>
+            <input id="prescriptionRef">
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" onclick="closePrescriptionModal()">Cancel</button>
+                <button class="modal-btn primary">]okay</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="/index.html" class="logo">MedCure</a>
+            <div class="nav-links" id="navLinks">
+                <a href="/index.html">Home</a>
+                <a href="/medicines.html" style="color: #b35e3a; font-weight: 600;">Medicines</a>
+                <div id="authSection"></div>
+            </div>
+        </nav>
+
+        <!-- Page Header with Search -->
+        <div class="page-header">
+            <h1>Our Medicines</h1>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search medicines..." onkeyup="filterMedicines()">
+                <button onclick="filterMedicines()">Search</button>
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="category-filters">
+            <button class="category-btn active" onclick="filterByCategory('all')">All</button>
+            <button class="category-btn" onclick="filterByCategory('pain-relief')">Pain Relief</button>
+            <button class="category-btn" onclick="filterByCategory('antibiotics')">Antibiotics</button>
+            <button class="category-btn" onclick="filterByCategory('vitamins')">Vitamins</button>
+            <button class="category-btn" onclick="filterByCategory('sleeping-aids')">Sleeping Aids</button>
+        </div>
+
+        <!-- Medicines Grid -->
+        <div class="medicines-grid" id="medicinesGrid"></div>
+    </div>
+
+    <footer class="footer">
+        <p>© MedCure 2025 · Your Health, Our Priority</p>
+    </footer>
+
+    <script>
+        // ================= MEDICINE DATABASE =================
+        const medicines = [
+            { id: 1, name: "Paracetamol 500mg", desc: "Pain relief, fever reducer", price: 45, category: "pain-relief", prescription: false, image: "📦" },
+            { id: 2, name: "Ibuprofen 400mg", desc: "Anti-inflammatory, pain relief", price: 65, category: "pain-relief", prescription: false, image: "📦" },
+            { id: 3, name: "Amoxicillin 500mg", desc: "Antibiotic for bacterial infections", price: 120, category: "antibiotics", prescription: true, image: "📦" },
+            { id: 4, name: "Azithromycin 500mg", desc: "Antibiotic for respiratory infections", price: 210, category: "antibiotics", prescription: true, image: "📦" },
+            { id: 5, name: "Vitamin C 1000mg", desc: "Immunity booster", price: 189, category: "vitamins", prescription: false, image: "📦" },
+            { id: 6, name: "Vitamin D3 60K IU", desc: "Bone health", price: 145, category: "vitamins", prescription: false, image: "📦" },
+            { id: 7, name: "Zolpidem 10mg", desc: "Sleeping aid", price: 280, category: "sleeping-aids", prescription: true, image: "📦" },
+            { id: 8, name: "Melatonin 5mg", desc: "Sleep regulator", price: 350, category: "sleeping-aids", prescription: true, image: "📦" },
+            { id: 9, name: "Cetirizine 10mg", desc: "Allergy relief", price: 32, category: "allergy", prescription: false, image: "📦" },
+            { id: 10, name: "Dolo 650mg", desc: "Fever relief", price: 52, category: "pain-relief", prescription: false, image: "📦" }
+        ];
+
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let currentItem = null;
+
+        // ================= AUTH =================
+        function isLoggedIn() {
+            try {
+                return JSON.parse(localStorage.getItem("user"))?.loggedIn;
+            } catch {
+                return false;
+            }
+        }
+
+        function updateAuthUI() {
+            const auth = document.getElementById("authSection");
+
+            if (isLoggedIn()) {
+                const user = JSON.parse(localStorage.getItem("user"));
+                auth.innerHTML = `
+            <span>👋 ${user.name}</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        `;
+            } else {
+                auth.innerHTML = `<a href="/login">Login</a>`;
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "/login";
+        }
+
+        // ================= CART =================
+        function updateCartCount() {
+            document.getElementById("cartCount").innerText =
+                cart.reduce((s, i) => s + i.quantity, 0);
+        }
+
+        async function addToCart(id, name, price, requiresPrescription) {
+            if (!isLoggedIn()) {
+                alert("🔐 Please login first");
+                localStorage.setItem("redirectAfterLogin", window.location.href);
+                window.location.href = "/login";
+                return;
+            }
+
+            if (requiresPrescription) {
+                currentItem = { id, name, price };
+                await showPrescriptionSelection(); // 🔥 THIS CALLS NEW FUNCTION
+            } else {
+                addItemToCart(id, name, price);
+            }
+        }
+
+        function addItemToCart(id, name, price) {
+            const exist = cart.find(i => i.id === id);
+
+            if (exist) exist.quantity++;
+            else cart.push({ id, name, price, quantity: 1 });
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+
+            alert("Added to cart");
+        }
+
+        // ================= PRESCRIPTION =================
+        async function loadUserPrescriptions() {
+            const user = JSON.parse(localStorage.getItem("user"));
+
+            const res = await fetch(`http://localhost:5000/api/prescriptions/user/${user._id}`);
+            const list = await res.json();
+
+            const container = document.getElementById("prescriptionList");
+            container.innerHTML = "";
+
+            list.forEach(p => {
+                const expired = new Date(p.expiry) < new Date();
+
+                container.innerHTML += `
+            <div style="border:1px solid #ddd;padding:10px;margin:10px;border-radius:10px">
+                <p>ID: ${p.id}</p>
+                <p>Expiry: ${p.expiry}</p>
+                <button ${expired ? "disabled" : ""} 
+                    onclick="selectPrescription('${p.id}')">
+                    ${expired ? "Expired" : "Use"}
+                </button>
+            </div>
+        `;
+            });
+        }
+
+
+        // ================= LOAD MEDICINES =================
+        function loadMedicines(filteredList = medicines) {
+            const grid = document.getElementById("medicinesGrid");
+            grid.innerHTML = "";
+
+            filteredList.forEach(m => {
+                grid.innerHTML += `
+        <div class="medicine-card">
+            ${m.prescription ? '<span class="prescription-badge">Rx</span>' : ''}
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='25' fill='%23edd9cb'/%3E%3Ctext x='40' y='55' font-size='34' fill='%239b6b5e'%3E💊%3C/text%3E%3C/svg%3E"" style="width:100px;height:100px;object-fit:contain;">
+            <div class="medicine-name">${m.name}</div>
+            <div class="medicine-price">₹${m.price}</div>
+            <button class="add-to-cart" onclick="addToCart(${m.id}, '${m.name}', ${m.price}, ${m.prescription})">
+                Add To Cart
+            </button>
+        </div>
+        `;
+            });
+        }
+
+        function filterMedicines() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const grid = document.getElementById("medicinesGrid");
+
+            const filteredList = medicines.filter(m =>
+                m.name.toLowerCase().includes(input)
+            );
+
+            grid.innerHTML = "";
+
+            // ✅ ADD HERE
+            if (filteredList.length === 0) {
+                grid.innerHTML = "<p>No medicines found</p>";
+                return;
+            }
+
+            filteredList.forEach(m => {
+                grid.innerHTML += `
+            <div class="medicine-card">
+                ${m.prescription ? '<span class="prescription-badge">Rx</span>' : ''}
+                <div class="medicine-name">${m.name}</div>
+                <div class="medicine-price">₹${m.price}</div>
+                <button class="add-to-cart"
+                    onclick="addToCart(${m.id}, '${m.name}', ${m.price}, ${m.prescription})">
+                    Add To Cart
+                </button>
+            </div>
+        `;
+            });
+        }
+
+        function filterByCategory(category) {
+            const grid = document.getElementById("medicinesGrid");
+
+            const filteredList = category === "all"
+                ? medicines
+                : medicines.filter(m => m.category === category);
+
+            grid.innerHTML = "";
+
+            // ✅ ADD HERE
+            if (filteredList.length === 0) {
+                grid.innerHTML = "<p>No medicines found</p>";
+                return;
+            }
+
+            filteredList.forEach(m => {
+                grid.innerHTML += `
+            <div class="medicine-card">
+                ${m.prescription ? '<span class="prescription-badge">Rx</span>' : ''}
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='25' fill='%23edd9cb'/%3E%3Ctext x='40' y='55' font-size='34' fill='%239b6b5e'%3E💊%3C/text%3E%3C/svg%3E"" style="width:100px;height:100px;object-fit:contain;">
+                <div class="medicine-name">${m.name}</div>
+                <div class="medicine-price">₹${m.price}</div>
+                <button class="add-to-cart"
+                    onclick="addToCart(${m.id}, '${m.name}', ${m.price}, ${m.prescription})">
+                    Add To Cart
+                </button>
+            </div>
+        `;
+            });
+        }
+        async function selectPrescription(id) {
+
+            try {
+                const res = await fetch(`http://localhost:5000/api/prescriptions/${id}`);
+
+                if (!res.ok) {
+                    throw new Error("Invalid prescription");
+                }
+
+                const data = await res.json();
+
+                if (new Date(data.expiryDate) < new Date()) {
+                    alert("❌ Prescription expired");
+                    return;
+                }
+
+                const allowed = data.medicines.some(m =>
+                    currentItem.name.toLowerCase().includes(m.name.toLowerCase())
+                );
+
+                if (!allowed) {
+                    alert("❌ Medicine not in prescription");
+                    return;
+                }
+
+                addItemToCart(currentItem.id, currentItem.name, currentItem.price);
+                closePrescriptionModal();
+                alert("✅ Verified & added!");
+
+            } catch (err) {
+                console.error(err);
+                alert("❌ Error verifying prescription");
+            }
+        }
+        async function showPrescriptionSelection() {
+
+            try {
+                const user = JSON.parse(localStorage.getItem("user"));
+
+                const res = await fetch(`http://localhost:5000/api/prescriptions/user/${user._id}`);
+
+                if (!res.ok) {
+                    throw new Error("Failed to fetch prescriptions");
+                }
+
+                const prescriptions = await res.json();
+
+                if (!prescriptions.length) {
+                    alert("❌ No prescriptions found");
+                    return;
+                }
+
+                let html = prescriptions.map(p => `
+            <div onclick="selectPrescription('${p._id}')"
+                 style="padding:10px;margin:10px;border:1px solid #ccc;cursor:pointer;">
+                📄 Prescription <br>
+                Expiry: ${new Date(p.expiryDate).toDateString()}
+            </div>
+        `).join("");
+
+                const modal = document.getElementById("prescriptionModal");
+
+                modal.innerHTML = `
+            <div class="prescription-modal">
+                <h3>Select Prescription</h3>
+                ${html}
+                <button onclick="closePrescriptionModal()">Cancel</button>
+            </div>
+        `;
+
+                modal.style.display = "flex";
+
+            } catch (err) {
+                console.error(err);
+                alert("❌ Error loading prescriptions");
+            }
+        }
+        function closePrescriptionModal() {
+            const modal = document.getElementById("prescriptionModal");
+            modal.style.display = "none";
+            modal.innerHTML = "";
+        }
+
+        // ================= INIT =================
+        loadMedicines();
+        updateCartCount();
+        updateAuthUI();
+    </script>
+</body>
+
+</html>
