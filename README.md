@@ -4,29 +4,29 @@ MedCure is a full-stack healthcare web application that allows users to order me
 
 # Features
 
--User Signup & Login Authentication
--Session Management using Express Session
--Online Medicine Ordering System
--Search & Category Filtering for Medicines
--Shopping Cart Functionality
--Prescription Verification for Restricted Medicines
--Doctor Dashboard for Adding Prescriptions
--Prescription Expiry Validation
--MongoDB Database Integration
--Responsive User Interface
+- User Signup & Login Authentication
+- Session Management using Express Session
+- Online Medicine Ordering System
+- Search & Category Filtering for Medicines
+- Shopping Cart Functionality
+- Prescription Verification for Restricted Medicines
+- Doctor Dashboard for Adding Prescriptions
+- Prescription Expiry Validation
+- MongoDB Database Integration
+- Responsive User Interface
 
 # Tech Stack
--Frontend
--HTML
--CSS
--JavaScript
+- Frontend
+- HTML
+- CSS
+- JavaScript
 
 # Backend
--Node.js
--Express.js
+- Node.js
+- Express.js
 
 # Database
--MongoDB
+- MongoDB
 
 # Project Structure
 
@@ -63,15 +63,15 @@ http://localhost:5000
 # User Roles
 
 # User
--Signup/Login
--Browse medicines
--Add medicines to cart
--Upload and use prescriptions
+- Signup/Login
+- Browse medicines
+- Add medicines to cart
+- Upload and use prescriptions
 
 # Doctor
--Login to doctor dashboard
--Add prescriptions for users
--Set prescription expiry dates
+- Login to doctor dashboard
+- Add prescriptions for users
+- Set prescription expiry dates
 
 🌐 Live Demo
 
